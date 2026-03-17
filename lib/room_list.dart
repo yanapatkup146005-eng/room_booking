@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_booking/login.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'booking_page.dart';
@@ -15,7 +16,9 @@ const String baseUrl = "http://localhost/flutter_booking_66704151/php_api/";
 //////////////////////////////////////////////////////////////
 
 class RoomList extends StatefulWidget {
-const RoomList({super.key});
+ final String name;
+
+ const RoomList({super.key,required this.name});
 
 @override
 State<RoomList> createState() => _RoomListState();
@@ -98,8 +101,14 @@ return Scaffold(
   ////////////////////////////////////////////////////////
 
   appBar: AppBar(
-    title: const Text("Meeting Room Booking"),
+    title: Text("Meeting Room Booking"),
     actions: [
+       Center(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Text("Welcome ${widget.name}"),
+            ),
+          ),
 
       IconButton(
         icon: const Icon(Icons.list_alt),
@@ -112,6 +121,22 @@ return Scaffold(
               builder: (_) => const BookingList(),
             ),
           );
+        }),
+
+           IconButton(
+        icon: const Icon(Icons.exit_to_app),
+        tooltip: "ออกจากระบบ",
+        onPressed: () {
+          
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const LoginPage(),
+            ),
+            (route) => false,
+          );
+
+       
 
         },
       )
